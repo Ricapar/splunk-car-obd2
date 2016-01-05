@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view autoCancelInterval="90" isVisible="true" objectMode="SimpleForm" onunloadCancelJobs="true" stylesheet="obd2.css" template="dashboard.html">
+   <label>Trip Viewer</label>
+   <module name="AccountBar" layoutPanel="appHeader" />
+   <module name="AppBar" layoutPanel="navigationHeader" />
+   <module name="Message" layoutPanel="messaging">
+      <param name="filter">*</param>
+      <param name="clearOnJobDispatch">False</param>
+      <param name="maxSize">1</param>
+   </module>
+   <module name="Message" layoutPanel="messaging">
+      <param name="filter">splunk.search.job</param>
+      <param name="clearOnJobDispatch">True</param>
+      <param name="maxSize">1</param>
+   </module>
+   <module name="TitleBar" layoutPanel="viewHeader">
+      <param name="actionsMenuFilter">dashboard</param>
+   </module>
+   <module name="ExtendedFieldSearch" layoutPanel="viewHeader">
+      <param name="replacementMap">
+         <param name="arg">
+            <param name="Trip_ID">
+               <param name="value" />
+            </param>
+         </param>
+      </param>
+      <param name="field">Trip ID</param>
+      <param name="intention">
+         <param name="arg">
+            <param name="Trip_ID">
+               <param name="fillOnEmpty">True</param>
+            </param>
+         </param>
+         <param name="name">stringreplace</param>
+      </param>
+      <param name="q">Trip ID</param>
+      <module name="SubmitButton">
+         <param name="label">Search</param>
+         <param name="updatePermalink">True</param>
+         <param name="visible">True</param>
+         <param name="allowSoftSubmit">True</param>
+
+
+      <module name="GenericHeader" layoutPanel="panel_row1_col1_grp1" autoRun="False">
+         <param name="label">Start &amp; End Times</param>  
+        <module name="HiddenSearch">
+            <param name="search">trip_uuid="$Trip_ID$" | stats min(_time) as Start_Time | eval Start_Time = strftime(Start_Time, "%l:%M %p")</param>
+            <module name="ViewstateAdapter">
+              <module name="SingleValue">
+                  <param name="beforeLabel">Start Time: </param>
+                  <module name="Gimp" />
+              </module>
+            </module>
+        </module>
+     </module>
+     <module name="HiddenSearch" autoRun="True" layoutPanel="panel_row1_col1_grp1">
+         <param name="search">trip_uuid="$Trip_ID$" | stats max(_time) as End_Time | eval End_Time = strftime(End_Time, "%l:%M %p")</param>
+         <module name="ViewstateAdapter">
+           <module name="SingleValue">
+               <param name="beforeLabel">End Time: </param>
+               <module name="Gimp" />
+           </module>
+         </module>
+     </module>
+
+      <module name="GenericHeader" layoutPanel="panel_row1_col1_grp2" autoRun="False">
+         <param name="label">Trip Length</param>        
+         <module name="HiddenSearch">
+            <param name="search">trip_uuid="$Trip_ID$" | stats max(`miles(Trip_Distance)`) as Distance | eval Distance=round(Distance,2)</param>
+            <module name="ViewstateAdapter">
+              <module name="SingleValue">
+                  <param name="afterLabel">Miles</param>
+                  <module name="Gimp" />
+              </module>
+            </module>
+        </module>
+     </module>
+     <module name="HiddenSearch" autoRun="True" layoutPanel="panel_row1_col1_grp2">
+         <param name="search">trip_uuid="$Trip_ID$" | stats min(_time) as Start_Time, max(_time) as End_Time | eval Time=round((End_Time-Start_Time)/60/60,2) | fields Time</param>
+         <module name="ViewstateAdapter">
+           <module name="SingleValue">
+               <param name="afterLabel">Hours</param>
+               <module name="Gimp" />
+           </module>
+         </module>
+     </module>
+
+
+         <!-- ==== ROW 1 === -->
+         <module name="GenericHeader" layoutPanel="panel_row2_col1_grp1" autoRun="False">
+            <param name="label">Avg Speed (MPH)</param>
+            <module name="HiddenSearch">
+               <param name="search">trip_uuid="$Trip_ID$" Speed__OBD&gt;0 | stats avg(`miles(Speed__OBD)`) as Avg</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.chart.rangeValues</item>
+                     <item>afterLabel</item>
+                     <item>charting.gaugeColors</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                     <param name="strictMode">True</param>
+                     <module name="JobProgressIndicator">
+                        <module name="EnablePreview">
+                           <param name="display">False</param>
+                           <param name="enable">True</param>
+                           <module name="HiddenChartFormatter">
+                              <param name="charting.chart">radialGauge</param>
+                              <param name="charting.chart.rangeValues">[0,70,100,160]</param>
+                              <param name="charting.gaugeColors">[0x7e9f44,0xfac61d,0xd13b3b]</param>
+                              <module name="JSChart">
+                                 <param name="width">100%</param>
+                                 <module name="Gimp" />
+                                 <module name="ConvertToDrilldownSearch">
+                                    <module name="ViewRedirector">
+                                       <param name="viewTarget">flashtimeline</param>
+                                    </module>
+                                 </module>
+                              </module>
+                           </module>
+                        </module>
+                     </module>
+                  </module>
+               </module>
+            </module>
+         </module>
+         <module name="GenericHeader" layoutPanel="panel_row2_col1_grp2" autoRun="False">
+            <param name="label">Max Speed (MPH)</param>
+            <module name="HiddenSearch">
+               <param name="search">trip_uuid="$Trip_ID$" Speed__OBD&gt;0 | stats max(`miles(Speed__OBD)`) as Max_Speed</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.chart.rangeValues</item>
+                     <item>afterLabel</item>
+                     <item>charting.gaugeColors</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                     <param name="strictMode">True</param>
+                     <module name="JobProgressIndicator">
+                        <module name="EnablePreview">
+                           <param name="display">False</param>
+                           <param name="enable">True</param>
+                           <module name="HiddenChartFormatter">
+                              <param name="charting.chart">radialGauge</param>
+                              <param name="charting.chart.rangeValues">[0,70,100,160]</param>
+                              <param name="charting.gaugeColors">[0x7e9f44,0xfac61d,0xd13b3b]</param>
+                              <module name="JSChart">
+                                 <param name="width">100%</param>
+                                 <module name="Gimp" />
+                                 <module name="ConvertToDrilldownSearch">
+                                    <module name="ViewRedirector">
+                                       <param name="viewTarget">flashtimeline</param>
+                                    </module>
+                                 </module>
+                              </module>
+                           </module>
+                        </module>
+                     </module>
+                  </module>
+               </module>
+            </module>
+         </module>
+         <module name="GenericHeader" layoutPanel="panel_row2_col1_grp4" autoRun="False">
+            <param name="label">Avg RPM</param>
+            <module name="HiddenSearch">
+               <param name="search">trip_uuid="$Trip_ID$" Engine_RPM=* | stats avg(Engine_RPM) as Avg_RPM | eval Avg_RPM=round(Avg_RPM,0)</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.chart.rangeValues</item>
+                     <item>afterLabel</item>
+                     <item>charting.gaugeColors</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                     <param name="strictMode">True</param>
+                     <module name="JobProgressIndicator">
+                        <module name="EnablePreview">
+                           <param name="display">False</param>
+                           <param name="enable">True</param>
+                           <module name="HiddenChartFormatter">
+                              <param name="charting.chart">radialGauge</param>
+                              <param name="charting.chart.rangeValues">[0,3500,7000,8000]</param>
+                              <param name="charting.gaugeColors">[0x7e9f44,0xfac61d,0xd13b3b]</param>
+                              <module name="JSChart">
+                                 <param name="width">100%</param>
+                                 <module name="Gimp" />
+                                 <module name="ConvertToDrilldownSearch">
+                                    <module name="ViewRedirector">
+                                       <param name="viewTarget">flashtimeline</param>
+                                    </module>
+                                 </module>
+                              </module>
+                           </module>
+                        </module>
+                     </module>
+                  </module>
+               </module>
+            </module>
+         </module>
+         <module name="GenericHeader" layoutPanel="panel_row2_col1_grp5" autoRun="False">
+            <param name="label">Max RPM</param>
+            <module name="HiddenSearch">
+               <param name="search">trip_uuid="$Trip_ID$" Engine_RPM=* | stats max(Engine_RPM) as Max_RPM |  eval Max_RPM=round(Max_RPM,0)</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.chart.rangeValues</item>
+                     <item>afterLabel</item>
+                     <item>charting.gaugeColors</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                     <param name="strictMode">True</param>
+                     <module name="JobProgressIndicator">
+                        <module name="EnablePreview">
+                           <param name="display">False</param>
+                           <param name="enable">True</param>
+                           <module name="HiddenChartFormatter">
+                              <param name="charting.chart">radialGauge</param>
+                              <param name="charting.chart.rangeValues">[0,3500,7000,8000]</param>
+                              <param name="charting.gaugeColors">[0x7e9f44,0xfac61d,0xd13b3b]</param>
+                              <module name="JSChart">
+                                 <param name="width">100%</param>
+                                 <module name="Gimp" />
+                                 <module name="ConvertToDrilldownSearch">
+                                    <module name="ViewRedirector">
+                                       <param name="viewTarget">flashtimeline</param>
+                                    </module>
+                                 </module>
+                              </module>
+                           </module>
+                        </module>
+                     </module>
+                  </module>
+               </module>
+            </module>
+         </module>
+         <module name="GenericHeader" layoutPanel="panel_row2_col1_grp3" autoRun="False">
+            <param name="label">Green Score</param>
+            <module name="HiddenSearch">
+               <param name="search">`green_score($Trip_ID$)` | gauge GreenScore</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.chart.rangeValues</item>
+                     <item>afterLabel</item>
+                     <item>charting.gaugeColors</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                     <param name="strictMode">True</param>
+                     <module name="JobProgressIndicator">
+                        <module name="EnablePreview">
+                           <param name="display">False</param>
+                           <param name="enable">True</param>
+                           <module name="HiddenChartFormatter">
+                              <param name="charting.chart.style">minimal</param>
+                              <param name="charting.chart">radialGauge</param>
+                              <param name="charting.backgroundColor">0xA2E8AB</param>
+                              <param name="charting.chart.rangeValues">[40,60,80,100]</param>
+                              <param name="charting.gaugeColors">[0xd13b3b,0xfac61d,0x7e9f44]</param>
+                              <module name="JSChart">
+                                 <param name="width">100%</param>
+                                 <module name="Gimp" />
+                                 <module name="ConvertToDrilldownSearch">
+                                    <module name="ViewRedirector">
+                                       <param name="viewTarget">flashtimeline</param>
+                                    </module>
+                                 </module>
+                              </module>
+                           </module>
+                        </module>
+                     </module>
+                  </module>
+               </module>
+            </module>
+         </module>
+         <!-- ==== ROW 2 === -->
+
+         <module name="HiddenSearch" layoutPanel="panel_row3_col2" autoRun="true">
+            <param name="search">trip_uuid="$Trip_ID$" (GPS_Latitude=* OR GPS_Longitude=* OR Speed__OBD=*) | transaction _time | eval LatLong=GPS_Latitude+","+GPS_Longitude | eval Speed__OBD=round(Speed__OBD * 0.621371,0) | sort _time | fields _time LatLong Speed__OBD</param>
+            <module name="CustomJSONResults" />
+         </module>
+         <module name="GenericHeader" layoutPanel="panel_row3_col1" autoRun="False">
+            <param name="label">Speed (MPH)</param>
+            <module name="HiddenSearch">
+               <param name="search">trip_uuid="$Trip_ID$" Speed__OBD=* | timechart bins=800 avg(`miles(Speed__OBD)`) as Avg_Speed</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.legend.placement</item>
+                     <item>charting.chart.nullValueMode</item>
+                     <item>drilldown</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                     <param name="strictMode">True</param>
+                     <module name="JobProgressIndicator">
+                        <module name="EnablePreview">
+                           <param name="display">False</param>
+                           <param name="enable">True</param>
+                           <module name="HiddenChartFormatter">
+                              <param name="charting.chart">line</param>
+                              <param name="charting.legend.placement">none</param>
+                              <param name="charting.chart.nullValueMode">connect</param>
+                              <param name="charting.primaryAxisTitle.text" />
+                              <param name="charting.secondaryAxisTitle.text" />
+                              <param name="charting.primaryAxisTitle.height">0</param>
+                              <param name="charting.secondaryAxisTitle.height">0</param>
+                              <module name="JSChart">
+                                 <param name="width">100%</param>
+                                 <module name="Gimp" />
+                              </module>
+                           </module>
+                        </module>
+                     </module>
+                  </module>
+               </module>
+            </module>
+         </module>
+         <module name="GenericHeader" layoutPanel="panel_row3_col1" autoRun="False">
+            <param name="label">Engine RPM</param>
+            <module name="HiddenSearch">
+               <param name="search">trip_uuid="$Trip_ID$" Engine_RPM=* | timechart bins=800 avg(Engine_RPM) as Avg_RPM</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.legend.placement</item>
+                     <item>charting.chart.nullValueMode</item>
+                     <item>drilldown</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                     <param name="strictMode">True</param>
+                     <module name="JobProgressIndicator">
+                        <module name="EnablePreview">
+                           <param name="display">False</param>
+                           <param name="enable">True</param>
+                           <module name="HiddenChartFormatter">
+                              <param name="charting.chart">line</param>
+                              <param name="charting.legend.placement">none</param>
+                              <param name="charting.chart.nullValueMode">connect</param>
+                              <param name="charting.primaryAxisTitle.text" />
+                              <param name="charting.secondaryAxisTitle.text" />
+                              <param name="charting.primaryAxisTitle.height">0</param>
+                              <param name="charting.secondaryAxisTitle.height">0</param>
+                              <module name="JSChart">
+                                 <param name="width">100%</param>
+                                 <module name="Gimp" />
+                              </module>
+                           </module>
+                        </module>
+                     </module>
+                  </module>
+               </module>
+            </module>
+         </module>
+
+         <!-- ==== ROW 3 === -->
+
+         <module name="GenericHeader" layoutPanel="panel_row4_col1" autoRun="False">
+            <param name="label">Engine Load</param>
+            <module name="HiddenSearch">
+               <param name="search">trip_uuid=$Trip_ID$ Engine_Load=*  | timechart bins=200 avg(Engine_Load) as Engine_Load</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.legend.placement</item>
+                     <item>charting.chart.nullValueMode</item>
+                     <item>drilldown</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                     <param name="strictMode">True</param>
+                     <module name="JobProgressIndicator">
+                        <module name="EnablePreview">
+                           <param name="display">False</param>
+                           <param name="enable">True</param>
+                           <module name="HiddenChartFormatter">
+                              <param name="charting.chart">line</param>
+                              <param name="charting.legend.placement">none</param>
+                              <param name="charting.chart.nullValueMode">connect</param>
+                              <param name="charting.primaryAxisTitle.text" />
+                              <param name="charting.secondaryAxisTitle.text" />
+                              <param name="charting.primaryAxisTitle.height">0</param>
+                              <param name="charting.secondaryAxisTitle.height">0</param>
+                              <module name="JSChart">
+                                 <param name="width">100%</param>
+                                 <module name="Gimp" />
+                              </module>
+                           </module>
+                        </module>
+                     </module>
+                  </module>
+               </module>
+            </module>            
+         </module>
+
+         <module name="GenericHeader" layoutPanel="panel_row4_col2" autoRun="False">
+            <param name="label">Vehicle Activity</param>
+            <module name="HiddenSearch">
+               <param name="search">trip_uuid=$Trip_ID$ (Speed__OBD=* OR Engine_RPM=*) | stats avg(Speed__OBD) as Speed, avg(Engine_RPM) as RPM by _time | eval Sum=Speed+RPM | eval Status=if(Sum &gt; RPM, "Moving", "Idle") | timechart span=10s count by Status</param>
+               <module name="ViewstateAdapter">
+                  <param name="suppressionList">
+                     <item>charting.chart</item>
+                     <item>charting.legend.placement</item>
+                     <item>charting.chart.nullValueMode</item>
+                     <item>drilldown</item>
+                  </param>
+                  <module name="HiddenFieldPicker">
+                  <param name="strictMode">True</param>
+                  <module name="JobProgressIndicator">
+                     <module name="EnablePreview">
+                        <param name="display">False</param>
+                        <param name="enable">True</param>
+                        <module name="HiddenChartFormatter">
+                        <param name="charting.primaryAxisTitle.height">0</param>
+                        <param name="charting.primaryAxisTitle.margin">0</param>
+                        <param name="charting.primaryAxisTitle.text"></param>                           
+                           <param name="charting.chart.stackMode">stacked100</param>
+                           <param name="charting.chart">area</param>
+                           <param name="charting.legend.placement">right</param>
+                           <param name="charting.chart.nullValueMode">connect</param>
+                           <module name="JSChart" />
+                        </module>
+                     </module>
+                  </module>
+               </module>
+               </module>
+            </module>  
+         </module>
+
+         
+
+
+         
+      </module>
+   </module>
+</view>

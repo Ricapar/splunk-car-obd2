@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view autoCancelInterval="90" isVisible="true" objectMode="SimpleDashboard" onunloadCancelJobs="true" refresh="-1" template="dashboard.html">
+   <label>test2</label>
+   <module name="AccountBar" layoutPanel="appHeader" />
+   <module name="AppBar" layoutPanel="navigationHeader" />
+   <module name="Message" layoutPanel="messaging">
+      <param name="filter">*</param>
+      <param name="maxSize">1</param>
+      <param name="clearOnJobDispatch">False</param>
+   </module>
+   <module name="DashboardTitleBar" layoutPanel="viewHeader" />
+   <module name="Message" layoutPanel="navigationHeader">
+      <param name="filter">splunk.search.job</param>
+      <param name="level">warn</param>
+      <param name="maxSize">1</param>
+      <param name="clearOnJobDispatch">True</param>
+   </module>
+   <module name="StaticContentSample" layoutPanel="panel_row1_col1">
+      <param name="text">&lt;h1&gt;This is a test&lt;/h1&gt;</param>
+      <module name="Gimp" />
+   </module>
+   <module name="HiddenSearch" layoutPanel="panel_row1_col1" autoRun="true">
+      <param name="search">trip_uuid="b995e73d" (GPS_Latitude=* OR GPS_Longitude=* OR Speed__OBD=*) | transaction _time | eval LatLong=GPS_Latitude+","+GPS_Longitude | eval Speed__OBD=round(Speed__OBD * 0.621371,0) | sort _time | fields _time LatLong Speed__OBD</param>
+      <param name="earliest">-30d@h</param>
+      <!-- <param name="maxCount">10000000000000</param> -->
+      <module name="CustomJSONResults">
+         <!-- 
+        <param name="height">500px</param>  
+        <param name="mapType">roadmap</param>  
+        <param name="scrollwheel">off</param>  
+        <param name="mapTypeControl">off</param>
+        <param name="overlay.rangeMap">0,25,45,70,100</param>
+        <param name="debug">true</param> -->
+      </module>
+   </module>
+</view>

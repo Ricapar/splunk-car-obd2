@@ -1,0 +1,94 @@
+.GenericHeader  { 
+	margin: 0 3px !important;
+	padding: 0 !important;
+}
+
+.GenericHeader h3 {
+	background: #499bea; /* Old browsers */
+	background: -moz-linear-gradient(top, #499bea 0%, #207ce5 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#499bea), color-stop(100%,#207ce5)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #499bea 0%,#207ce5 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #499bea 0%,#207ce5 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #499bea 0%,#207ce5 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #499bea 0%,#207ce5 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 ); /* IE6-9 */
+
+	padding: 6px !important;
+	text-align: center;
+	color: #fff !important;
+	border-bottom: 3px solid #0d4c93;
+	width: 100% !important;
+
+
+}
+
+#GenericHeader_0_0_0 h3, #GenericHeader_6_2_8 h3 {
+	background: #7fac61; /* Old browsers */
+	background: -moz-linear-gradient(top, #7fac61 0%, #5e8d3d 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7fac61), color-stop(100%,#5e8d3d)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #7fac61 0%,#5e8d3d 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #7fac61 0%,#5e8d3d 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #7fac61 0%,#5e8d3d 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #7fac61 0%,#5e8d3d 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7fac61', endColorstr='#5e8d3d',GradientType=0 ); /* IE6-9 */
+	border-bottom: 3px solid #2e4e17;
+}
+
+.appHeaderWrapper {
+	background: #499bea; /* Old browsers */
+	background: -moz-linear-gradient(top, #499bea 0%, #207ce5 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#499bea), color-stop(100%,#207ce5)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #499bea 0%,#207ce5 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #499bea 0%,#207ce5 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #499bea 0%,#207ce5 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #499bea 0%,#207ce5 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5',GradientType=0 ); /* IE6-9 */
+	border-bottom: 5px solid #0d4c93;
+	color: #fff !important;
+}
+
+#SingleValue_0_5_0 .SingleValueHolder, #SingleValue_2_5_0 .SingleValueHolder {  display: block; float: left; width: 49% }
+
+
+.simpleResultsTable th {
+	font-size: 1.3em !important;
+}
+
+.simpleResultsTable th:last-child {
+	background: #7fac61; /* Old browsers */
+	background: -moz-linear-gradient(top, #7fac61 0%, #5e8d3d 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7fac61), color-stop(100%,#5e8d3d)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #7fac61 0%,#5e8d3d 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #7fac61 0%,#5e8d3d 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #7fac61 0%,#5e8d3d 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #7fac61 0%,#5e8d3d 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7fac61', endColorstr='#5e8d3d',GradientType=0 ); /* IE6-9 */
+	color: #fff !important;
+}
+
+.simpleResultsTable th:last-child a {
+	color: #fff !important;
+}
+
+
+.simpleResultsTable td {
+	padding: 9px !important;
+}
+
+
+/*
+.ExtendedFieldSearch, .SubmitButton { display:  none 	}
+*/
+
+.StaticContentSample h1 { border-bottom: 2px solid #73a550; padding: 5px 0 !important; margin: 0 5px }
+.StaticContentSample p { display: none !important; }
+
+
+.navigationLead { color: #fff !important; border-top: 5px #0d4c93 }
+
+
+.appHeaderWrapper h1 { color: #fff !important;}
+.appHeaderWrapper a { color: #fff !important }
+
+
+.layoutView { border: 5px solid #f00; }

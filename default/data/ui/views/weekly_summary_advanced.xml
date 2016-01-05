@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view
+  autoCancelInterval="90"
+  isVisible="true"
+  objectMode="SimpleDashboard"
+  onunloadCancelJobs="true"
+  refresh="-1"
+  stylesheet="obd2.css"
+  template="dashboard.html">
+
+    <label>Weekly Driving Summary</label>
+    <module name="AccountBar" layoutPanel="appHeader" />
+    <module name="AppBar" layoutPanel="navigationHeader" />
+
+    <module name="StaticContentSample" layoutPanel="panel_row1_col1">
+        <param name="text"><![CDATA[
+          <h1>Weekly Driving Statistics</h1>
+        ]]></param>
+    </module>
+    <module name="GenericHeader" layoutPanel="panel_row1_col1_grp1">
+        <param name="label">Average Green Score</param>
+        <module name="HiddenSavedSearch" autoRun="True">
+            <param name="savedSearch">Weekly Green Score</param>
+            <module name="ViewstateAdapter">
+                <param name="suppressionList">
+                    <item>charting.chart.style</item>
+                    <item>charting.legend.placement</item>
+                    <item>charting.chart.nullValueMode</item>
+                    <item>afterLabel</item>
+                    <item>charting.chart.rangeValues</item>
+                    <item>charting.chart.stackMode</item>
+                    <item>charting.layout.splitSeries</item>
+                </param>
+                <param name="savedSearch">Weekly Green Score</param>
+                <module name="HiddenFieldPicker">
+                    <param name="strictMode">True</param>
+                    <module name="SingleValue">
+                        <param name="afterLabel">%</param>
+                        <module name="Gimp" />
+                    </module>
+                </module>
+            </module>
+        </module>
+    </module>
+    <module name="GenericHeader" layoutPanel="panel_row1_col1_grp2">
+        <param name="label">Average Speed</param>
+        <module name="HiddenSavedSearch" autoRun="True">
+            <param name="savedSearch">Weekly Average Speed</param>
+            <module name="ViewstateAdapter">
+                <param name="suppressionList">
+                    <item>charting.gaugeColors</item>
+                    <item>charting.chart.rangeValues</item>
+                    <item>afterLabel</item>
+                </param>
+                <param name="savedSearch">Weekly Average Speed</param>
+                <module name="HiddenFieldPicker">
+                    <param name="strictMode">True</param>
+                    <module name="SingleValue">
+                        <param name="afterLabel">MPH</param>
+                        <module name="Gimp" />
+                    </module>
+                </module>
+            </module>
+        </module>
+    </module>
+
+    <module name="GenericHeader" layoutPanel="panel_row1_col1_grp3">
+        <param name="label">Max Speed</param>
+        <module name="HiddenSavedSearch" autoRun="True">
+            <param name="savedSearch">Weekly Max Speed</param>
+            <module name="ViewstateAdapter">
+                <param name="suppressionList">
+                    <item>charting.gaugeColors</item>
+                    <item>charting.chart.rangeValues</item>
+                    <item>afterLabel</item>
+                </param>
+                <param name="savedSearch">Weekly Max Speed</param>
+                <module name="HiddenFieldPicker">
+                    <param name="strictMode">True</param>
+                    <module name="SingleValue">
+                        <param name="afterLabel">MPH</param>
+                        <module name="Gimp" />
+                    </module>
+                </module>
+            </module>
+        </module>
+    </module>
+    <module name="GenericHeader" layoutPanel="panel_row1_col1_grp4">
+        <param name="label">Time Spent Driving</param>
+        <module name="HiddenSavedSearch" autoRun="True">
+            <param name="savedSearch">Weekly Time Spent Driving</param>
+            <module name="ViewstateAdapter">
+                <param name="suppressionList">
+                    <item>charting.chart.style</item>
+                    <item>charting.legend.placement</item>
+                    <item>charting.chart.nullValueMode</item>
+                    <item>afterLabel</item>
+                    <item>charting.chart.rangeValues</item>
+                    <item>charting.chart.stackMode</item>
+                    <item>charting.layout.splitSeries</item>
+                </param>
+                <param name="savedSearch">Weekly Time Spent Driving</param>
+                <module name="HiddenFieldPicker">
+                    <param name="strictMode">True</param>
+                    <module name="SingleValue">
+                        <param name="afterLabel">Hours</param>
+                        <module name="Gimp" />
+                    </module>
+                </module>
+            </module>
+        </module>
+    </module>
+    <!-- ================ ROW 2 ================ -->
+    <module name="StaticContentSample" layoutPanel="panel_row2_col1">
+        <param name="text"><![CDATA[
+          <h1>Time Spent Driving</h1>
+        ]]></param>
+    </module>     
+    <module name="StaticContentSample" layoutPanel="panel_row2_col2">
+        <param name="text"><![CDATA[
+          <h1>Distance Driven</h1>
+        ]]></param>
+    </module>     
+    <module name="StaticContentSample" layoutPanel="panel_row2_col3">
+        <param name="text"><![CDATA[
+          <h1>Speed Range Distribution</h1>
+        ]]></param>
+    </module>  
+
+    <module name="HiddenSavedSearch" layoutPanel="panel_row2_col1" autoRun="True">
+        <param name="savedSearch">Weekly Time Spent Driving by Day</param>
+        <module name="ViewstateAdapter">
+            <param name="suppressionList">
+                <item>charting.gaugeColors</item>
+                <item>charting.chart</item>
+                <item>charting.chart.rangeValues</item>
+                <item>afterLabel</item>
+            </param>
+            <param name="savedSearch">Weekly Time Spent Driving by Day</param>
+            <module name="HiddenFieldPicker">
+                <param name="strictMode">True</param>
+                <module name="JobProgressIndicator">
+                    <module name="EnablePreview">
+                        <param name="display">False</param>
+                        <param name="enable">True</param>
+                        <module name="HiddenChartFormatter">
+                            <param name="charting.chart">column</param>
+                            <param name="charting.legend.placement">none</param>  
+                            <param name="charting.primaryAxisTitle.height">0</param>
+                            <param name="charting.primaryAxisTitle.margin">0</param>
+                            <param name="charting.primaryAxisTitle.text"></param>
+                            <param name="charting.secondaryAxisTitle.text">Hours Driving</param>
+                            <param name="charting.seriesColors">[0x4699ea]</param>
+                            <module name="JSChart" />
+                        </module>
+                    </module>
+                </module>
+            </module>
+        </module>
+    </module>
+    <module name="HiddenSavedSearch" layoutPanel="panel_row2_col2" autoRun="True">
+        <param name="savedSearch">Weekly Distance Driven by Day</param>
+        <module name="ViewstateAdapter">
+            <param name="suppressionList">
+                <item>charting.gaugeColors</item>
+                <item>charting.chart</item>
+                <item>charting.chart.rangeValues</item>
+                <item>afterLabel</item>
+            </param>
+            <param name="savedSearch">Weekly Distance Driven by Day</param>
+            <module name="HiddenFieldPicker">
+                <param name="strictMode">True</param>
+                <module name="JobProgressIndicator">
+                    <module name="EnablePreview">
+                        <param name="display">False</param>
+                        <param name="enable">True</param>
+                        <module name="HiddenChartFormatter">
+                            <param name="charting.chart">column</param>
+                            <param name="charting.legend.placement">none</param>  
+                            <param name="charting.primaryAxisTitle.height">0</param>
+                            <param name="charting.primaryAxisTitle.margin">0</param>
+                            <param name="charting.primaryAxisTitle.text"></param>
+                            <param name="charting.secondaryAxisTitle.text">Miles Driven</param>
+                            <param name="charting.seriesColors">[0x7eb68e]</param>
+                            <module name="JSChart" />
+                        </module>
+                    </module>
+                </module>
+            </module>
+        </module>
+    </module>
+
+    <module name="HiddenSavedSearch" layoutPanel="panel_row2_col3" autoRun="True">
+        <param name="savedSearch">Week's Speed Range Distribution</param>
+        <module name="ViewstateAdapter">
+            <param name="savedSearch">Week's Speed Range Distribution</param>
+            <module name="JobProgressIndicator">
+                <module name="EnablePreview">
+                    <param name="display">False</param>
+                    <param name="enable">True</param>
+                    <module name="HiddenChartFormatter">
+                        <param name="charting.chart">column</param>
+                        <param name="charting.chart.stackMode">stacked</param>
+                        <param name="charting.legend.placement">none</param>   
+                        <param name="charting.primaryAxisTitle.height">0</param>
+                        <param name="charting.primaryAxisTitle.margin">0</param>
+                        <param name="charting.primaryAxisTitle.text"></param>
+                        <param name="charting.secondaryAxisTitle.text">% Time in Range</param>  
+                        <!-- 3, 4, 1, 2 -->
+                        <param name="charting.seriesColors">[0x7fac61,0x6bb7c8,0xd13b3b,0xfac61d]</param>
+                        <!-- <param name="charting.seriesColors">[0x956e96,0xfac61d,0x7fac61,0x6bb7c8]</param> -->
+                        <module name="JSChart" />
+                    </module>
+                </module>
+            </module>
+        </module>
+    </module>
+    <!-- ================ ROW 3 ================ -->
+    <module name="StaticContentSample" layoutPanel="panel_row3_col1">
+        <param name="text"><![CDATA[
+          <h1>Recent Trip Summary</h1>
+        ]]></param>
+    </module>    
+
+
+
+
+
+    <module name="HiddenSavedSearch" layoutPanel="panel_row3_col1" autoRun="True">
+        <param name="savedSearch">Recent Trip Summary</param>
+    <module name="ViewstateAdapter">
+      <param name="savedSearch">Recent Trip Summary</param>
+      <param name="suppressionList">
+        <item>count</item>
+        <item>drilldown</item>
+        <item>displayRowNumbers</item>
+      </param>
+      <module name="HiddenFieldPicker">
+        <param name="strictMode">True</param>
+        <module name="JobProgressIndicator"/>
+        <module name="Paginator">
+          <param name="count">10</param>
+          <param name="entityName">results</param>
+          <module name="EnablePreview">
+            <param name="enable">True</param>
+            <param name="display">False</param>
+            <module name="SimpleResultsTable">
+              <param name="count">10</param>
+              <param name="allowTransformedFieldSelect">True</param>
+              <param name="drilldown">all</param>
+              <param name="entityName">results</param>
+              <param name="displayRowNumbers">true</param>
+              <module name="Gimp"/>
+              <module name="SimpleDrilldown">
+                <param name="links">
+                  <param name="*"> ./trip_data_advanced?form.Trip_ID=$row.Trip_ID$ </param>
+                </param>
+              </module>
+            </module>
+            <module name="ViewRedirectorLink">
+              <param name="viewTarget">flashtimeline</param>
+            </module>
+          </module>
+        </module>
+      </module>
+    </module>
+        
+
+    </module>
+</view>

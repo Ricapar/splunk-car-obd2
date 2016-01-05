@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='utf-8'?>
+<form>
+  <label>Trip Viewer</label>
+
+  <fieldset>
+        <!--<input type="dropdown" token="Trip_ID"> 
+          <label>Select a Trip ID</label> 
+          <populatingSearch fieldForValue="Trip_ID" fieldForLabel="label"><![CDATA[| savedsearch "Recent Trip Summary" | eval label=Trip_ID+" ("+Start_Time+" to "+End_Time+")"]]></populatingSearch> 
+          <default>NA</default>
+        </input> -->
+      
+      <input type="text" token="Trip_ID">
+      <label>Trip ID</label>
+      <default></default>
+      <seed>Trip ID</seed>
+      <suffix></suffix>
+    </input>
+      
+  </fieldset>    
+    
+    
+  <row>
+    <table>
+      <searchTemplate>| savedsearch "Recent Trip Summary" | search Trip_ID=$Trip_ID$ | transpose | rename column as PID, "row 1" as Value | rex field=PID mode=sed "s/_/ /g"</searchTemplate>
+      <title>Recent Trip Summary</title>
+    </table>
+  
+      
+     <chart>
+      <title>Average Trip Speed (MPH)</title>
+      <searchTemplate>trip_uuid="$Trip_ID$" Speed__OBD>0 | stats avg(`miles(Speed__OBD)`) as Avg</searchTemplate>
+      <option name="afterLabel">MPH</option>
+      <option name="charting.chart">radialGauge</option>
+      <option name="charting.chart.rangeValues">[0,70,100,160]</option>
+      <option name="charting.gaugeColors">[0x7e9f44,0xfac61d,0xd13b3b]</option>   
+    </chart> 
+ 
+    <chart>
+      <title>Maximum Trip Speed (MPH)</title>
+      <searchTemplate>trip_uuid="$Trip_ID$" Speed__OBD>0 | stats max(`miles(Speed__OBD)`) as Max_Speed</searchTemplate>
+      <option name="afterLabel">MPH</option>
+      <option name="charting.chart">radialGauge</option>
+      <option name="charting.chart.rangeValues">[0,70,100,160]</option>
+      <option name="charting.gaugeColors">[0x7e9f44,0xfac61d,0xd13b3b]</option>   
+    </chart>    
+
+  </row>
+    
+  <row>
+    <chart>
+        <searchTemplate>trip_uuid="$Trip_ID$" Speed__OBD=* | timechart span=1s avg(`miles(Speed__OBD)`) as Avg_Speed</searchTemplate>    
+        <title>Logged Speed (MPH)</title>
+      	<option name="charting.chart">line</option>
+      	<option name="charting.legend.placement">none</option>
+      	<option name="drilldown">none</option>
+              <option name="charting.chart.nullValueMode">connect</option>
+
+    </chart>
+  
+    <chart>
+        <searchTemplate>trip_uuid="$Trip_ID$" Engine_RPM=* | timechart span=1s avg(Engine_RPM) as Avg_RPM</searchTemplate>    
+        <title>Engine RPM</title>
+      	<option name="charting.chart">line</option>
+      	<option name="charting.legend.placement">none</option>
+      	<option name="drilldown">none</option>
+              <option name="charting.chart.nullValueMode">connect</option>
+
+    </chart>      
+      
+    
+  </row>
+      
+  <row>
+      
+    <chart>
+        <searchTemplate>trip_uuid=$Trip_ID$ Fuel_Level__From_Engine_ECU=* Fuel_Level__From_Engine_ECU!=0 | timechart span=30s avg(Fuel_Level__From_Engine_ECU) as Fuel_Level</searchTemplate>
+        <title>Fuel Level</title>
+      	<option name="charting.chart">line</option>
+      	<option name="charting.legend.placement">none</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      	<option name="drilldown">none</option>
+              <option name="charting.chart.nullValueMode">connect</option>
+
+    </chart> 
+    <chart>
+        <searchTemplate>trip_uuid=$Trip_ID$ Miles_Per_Gallon_Instant=*  | timechart span=1s avg(Miles_Per_Gallon_Instant) as MPG</searchTemplate>
+        <title>Calculated MPG</title>
+      	<option name="charting.chart">line</option>
+      	<option name="charting.legend.placement">none</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      	<option name="drilldown">none</option>
+              <option name="charting.chart.nullValueMode">connect</option>
+
+    </chart>   
+    <chart>
+    	<searchTemplate>trip_uuid=$Trip_ID$ (Speed__OBD=* OR Engine_RPM=*) | stats avg(Speed__OBD) as Speed, avg(Engine_RPM) as RPM by _time | eval Sum=Speed+RPM | eval Status=if(Sum > RPM, "Moving", "Idle") | timechart span=10s count by Status</searchTemplate>    
+        <title>Engine Activity</title>
+      	<option name="charting.chart">area</option>
+        <option name="charting.chart.stackMode">stacked100</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      	<option name="charting.legend.placement">bottom</option>
+      	<option name="drilldown">none</option>
+              <option name="charting.chart.nullValueMode">connect</option>
+
+    </chart>
+      
+      
+  </row>
+    
+</form>

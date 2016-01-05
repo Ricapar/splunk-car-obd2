@@ -1,0 +1,182 @@
+[default]
+
+[]
+version = 5.0.3
+export = none
+modtime = 1373668223.008612000
+access = read : [ * ], write : [ admin ]
+
+[app/install/install_source_checksum]
+version = 6.2.1
+modtime = 1429145766.496256000
+
+[app/launcher]
+version = 5.0.4
+modtime = 1376685636.942023000
+
+[app/package/check_for_updates]
+version = 5.0.4
+modtime = 1376685636.944291000
+
+[app/ui]
+version = 5.0.4
+modtime = 1376685636.936480000
+
+[indexes/torque]
+version = 5.0.4
+owner = admin
+modtime = 1376626732.491614000
+
+[indexes/torque_summary]
+version = 5.0.4
+owner = admin
+modtime = 1377059117.718345000
+
+[inputs/monitor%3A%2F%2F%2FUsers%2FRicapar%2FDropbox%2FApps%2FSplunk%20for%20TorquePro%2F%2A.txt]
+version = 5.0.4
+owner = admin
+modtime = 1376626839.764348000
+
+[inputs/script%3A%2F%2F%2FApplications%2FSplunk%2Fetc%2Fapps%2Fobd2%2Fbin%2Fgreen-score.sh]
+version = 5.0.4
+owner = admin
+modtime = 1379029626.870151000
+
+[macros/miles%281%29]
+version = 5.0.3
+export = none
+owner = admin
+modtime = 1373666799.581507100
+
+[nav/default]
+version = 5.0.4
+modtime = 1376719664.174511000
+
+[savedsearches/Recent%20Trip%20Summary]
+version = 5.0.4
+modtime = 1379028657.494893000
+
+[savedsearches/Trip%20Green%20Score]
+version = 5.0.4
+modtime = 1377143897.949505000
+owner = admin
+export = none
+
+[savedsearches/Week%27s%20Speed%20Range%20Distribution]
+version = 5.0.4
+export = none
+owner = admin
+modtime = 1376710262.727418000
+
+[savedsearches/Weekly%20Average%20Speed]
+version = 5.0.4
+modtime = 1376662807.274254000
+
+[savedsearches/Weekly%20Distance%20Driven%20by%20Day]
+version = 5.0.4
+modtime = 1377230415.898829000
+owner = admin
+export = none
+
+[savedsearches/Weekly%20Engine%20Activity]
+version = 5.0.4
+modtime = 1377146357.806049000
+
+[savedsearches/Weekly%20Fuel%20Consumption]
+version = 5.0.4
+modtime = 1377146348.646047000
+
+[savedsearches/Weekly%20Green%20Score]
+version = 5.0.4
+modtime = 1377061757.901753000
+owner = admin
+export = none
+
+[savedsearches/Weekly%20Max%20Speed]
+version = 5.0.4
+modtime = 1376662768.172485000
+
+[savedsearches/Weekly%20Time%20Spent%20Driving]
+version = 5.0.4
+modtime = 1376662871.214205000
+
+[savedsearches/Weekly%20Time%20Spent%20Driving%20by%20Day]
+version = 5.0.4
+owner = admin
+modtime = 1377217204.903300000
+
+[views/test2]
+version = 5.0.4
+owner = admin
+modtime = 1376270830.698620400
+
+[views/test3]
+version = 5.0.4
+owner = admin
+modtime = 1376156590.179733700
+
+[views/trip_data]
+version = 5.0.3
+modtime = 1374900376.121923800
+
+[views/trip_data_advanced]
+version = 5.0.4
+export = none
+owner = admin
+modtime = 1376169798.010870900
+
+[views/weekly_summary]
+version = 5.0.4
+export = none
+modtime = 1377210298.303957000
+owner = admin
+access = read : [ * ], write : [ admin ]
+
+[views/weekly_summary_advanced]
+version = 5.0.4
+modtime = 1376156110.080232700
+owner = admin
+export = none
+
+[viewstates/%2A%3Ac3x6hwzt]
+version = 5.0.4
+modtime = 1377146148.951066000
+owner = nobody
+export = system
+
+[viewstates/%2A%3Aq8ina43i]
+version = 5.0.4
+modtime = 1376662807.214426000
+owner = nobody
+export = system
+
+[viewstates/%2A%3Arvmptuj8]
+version = 5.0.4
+modtime = 1376626704.286359000
+owner = nobody
+export = system
+
+[viewstates/flashtimeline%3A7ohfimq9]
+version = 5.0.4
+modtime = 1377217295.692160000
+owner = admin
+export = system
+
+[viewstates/flashtimeline%3Ahjukgu39]
+version = 5.0.3
+export = system
+owner = nobody
+modtime = 1375398016.962058100
+
+[viewstates/flashtimeline%3Ahk743pjc]
+version = 5.0.4
+modtime = 1376156574.114708100
+owner = nobody
+export = system
+
+[viewstates/flashtimeline%3Ahknfin7o]
+version = 5.0.4
+modtime = 1377143222.618621000
+owner = nobody
+export = system
+
